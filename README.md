@@ -12,6 +12,7 @@
 - Seeders
 - FormRequests
 - Laravel Sanctum
+- Resources
 
 ## Users:
 

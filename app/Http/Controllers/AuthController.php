@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AuthRequest;
+use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
 
 class AuthController extends Controller
@@ -13,7 +14,7 @@ class AuthController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function login(AuthRequest $request)
+    public function login(AuthRequest $request): \Illuminate\Http\JsonResponse
     {
         $credentials = $request->only('email', 'password');
 
@@ -32,7 +33,7 @@ class AuthController extends Controller
      * @param string $token
      * @return \Illuminate\Http\JsonResponse
      */
-    public function returnUserWithToken(string $token)
+    public function returnUserWithToken(string $token): \Illuminate\Http\JsonResponse
     {
         return response()->json([
             'message' => 'Authorized with success!',
@@ -44,11 +45,11 @@ class AuthController extends Controller
     /**
      * Returns current authenticated user.
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return UserResource
      */
-    public function user()
+    public function user(): UserResource
     {
-        return response()->json(auth()->user());
+        return new UserResource(auth()->user());
     }
 
     /**
@@ -56,7 +57,7 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function logout()
+    public function logout(): \Illuminate\Http\JsonResponse
     {
         auth()->user()->tokens()->delete();
 
