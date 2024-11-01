@@ -2,11 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LocationUserRequest;
 use App\Http\Resources\LocationResource;
-use Illuminate\Http\Request;
+use App\Models\LocationUser;
+use App\Services\LocationUsersService;
+use Illuminate\Http\Response;
 
 class LocationUserController extends Controller
 {
+    public function __construct(public LocationUsersService $locationUsersService) {}
+
     /**
      * Display a listing of the resource.
      * 
@@ -14,48 +19,36 @@ class LocationUserController extends Controller
      */
     public function index(): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
     {
-        $locations = auth()->user()->locations;
+        $locations = $this->locationUsersService->getUserLocations();
 
         return LocationResource::collection($locations);
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
+     * 
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request)
+    public function store(LocationUserRequest $request): \Illuminate\Http\JsonResponse
     {
-        //
-    }
+        $this->locationUsersService->storeUserLocation($request->location_id);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
+        return response()->json([
+            'message' => 'Location created successfully'
+        ], Response::HTTP_CREATED);
     }
 
     /**
      * Remove the specified resource from storage.
+     * 
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy(string $id)
+    public function destroy(LocationUser $location): \Illuminate\Http\JsonResponse
     {
-        //
+        $this->locationUsersService->deleteUserLocation($location);
+
+        return response()->json([
+            'message' => 'Location deleted successfully'
+        ]);
     }
 }

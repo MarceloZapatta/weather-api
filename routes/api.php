@@ -11,6 +11,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('user', [AuthController::class, 'user']);
     Route::post('logout', [AuthController::class, 'logout']);
 
-    Route::get('user/locations', [LocationUserController::class, 'index']);
+    Route::prefix('user')->group(function () {
+        Route::apiResource('locations', LocationUserController::class)->only(['index', 'store', 'destroy']);
+    });
 });
 
