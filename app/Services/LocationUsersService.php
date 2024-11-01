@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Exceptions\LocationUserAlreadyExistsException;
 use App\Models\LocationUser;
+use App\Repositories\LocationUserRepository;
 use Illuminate\Http\Response;
 
 /**
@@ -12,6 +13,8 @@ use Illuminate\Http\Response;
  */
 class LocationUsersService
 {
+    public function __construct(private LocationUserRepository $locationUserRepository) {}
+
     /**
      * Get user locations
      *
@@ -19,7 +22,7 @@ class LocationUsersService
      */
     public function getUserLocations(): \Illuminate\Support\Collection
     {
-        return auth()->user()->locations;
+        return $this->locationUserRepository->getForCurrentUser();
     }
 
     /**
@@ -29,15 +32,13 @@ class LocationUsersService
      */
     public function storeUserLocation(int $locationId): void
     {
-        $user = auth()->user();
-
-        $locationUser = LocationUser::where('user_id', $user->id)->where('location_id', $locationId)->first();
+        $locationUser = $this->locationUserRepository->findForCurrentUser($locationId);
 
         if ($locationUser) {
             throw new LocationUserAlreadyExistsException();
         }
 
-        $user->locations()->attach($locationId);
+        $this->locationUserRepository->createForCurrentUser($locationId);
     }
 
     /**
@@ -51,6 +52,6 @@ class LocationUsersService
             throw new \Illuminate\Auth\Access\AuthorizationException('This action is unauthorized.');
         }
 
-        $locationUser->delete();
+        $this->locationUserRepository->delete($locationUser);
     }
 }
