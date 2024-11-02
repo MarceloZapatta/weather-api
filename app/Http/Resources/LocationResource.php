@@ -16,7 +16,7 @@ class LocationResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
+            'city' => $this->city,
             'country' => $this->country,
             'forecasts' => LocationForecastResource::collection($this->forecasts),
         ];

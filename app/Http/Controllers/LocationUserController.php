@@ -31,7 +31,7 @@ class LocationUserController extends Controller
      */
     public function store(LocationUserRequest $request): \Illuminate\Http\JsonResponse
     {
-        $this->locationUsersService->storeUserLocation($request->location_id);
+        $this->locationUsersService->storeUserLocation($request->country, $request->city);
 
         return response()->json([
             'message' => 'Location created successfully'

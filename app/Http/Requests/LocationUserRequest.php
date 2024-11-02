@@ -22,7 +22,8 @@ class LocationUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'location_id' => 'required|exists:locations,id',
+            'country' => ['required', 'string'],
+            'city' => ['required', 'string'],
         ];
     }
 }

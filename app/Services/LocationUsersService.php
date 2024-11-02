@@ -30,17 +30,21 @@ class LocationUsersService
      *
      * @param int $locationId
      */
-    public function storeUserLocation(int $locationId): void
+    public function storeUserLocation(string $country, string $city): void
     {
-        $location = $this->locationUserRepository->findForCurrentUser($locationId);
+        $location = $this->locationService->findLocationByCountryName($country, $city);
 
-        // if ($location) {
+        if (!$location) {
+            $location = $this->locationService->createLocation($country, $city);
+        }
+
+        $locationUser = $this->locationUserRepository->findForCurrentUser($location->id);
+
+        // if ($locationUser) {
         //     throw new LocationUserAlreadyExistsException();
         // }
 
-        $this->locationUserRepository->createForCurrentUser($locationId);
-
-        $this->locationService->updateFiveDaysForecast($locationId);
+        $this->locationUserRepository->createForCurrentUser($location->id);
     }
 
     /**

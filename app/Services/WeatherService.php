@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Interfaces\WeatherServiceInterface;
+use App\Models\LocationForecastResponse;
 
 class WeatherService
 {
@@ -12,7 +13,7 @@ class WeatherService
      * @param string $location
      * @return LocationForecastResponse[]
      */
-    public function getWeather(string $location)
+    public function getWeather(string $location): array
     {
         return $this->weatherService->getWeatherForecast($location);
     }

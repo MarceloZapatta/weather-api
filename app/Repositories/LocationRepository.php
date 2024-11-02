@@ -7,26 +7,33 @@ use App\Models\LocationForecastResponse;
 
 class LocationRepository
 {
-	protected $model;
-
-	public function __construct(Location $location)
-	{
-		$this->model = $location;
-	}
+	public function __construct(private Location $model) {}
 
 	public function findLocationById($id)
 	{
 		return $this->model->find($id);
 	}
 
-	public function upsertLocationForecast($locationId, LocationForecastResponse $forecast) {
-		$location = $this->findLocationById($locationId);
+	function findLocationByCountryName(string $country, string $city): ?Location
+	{
+		return $this->model->where('country', $country)->where('city', $city)->first();
+	}
 
+	function createLocation(string $country, string $city): Location
+	{
+		return $this->model->updateOrCreate([
+			'country' => $country,
+			'city' => $city,
+		]);
+	}
+
+	public function upsertLocationForecast(Location $location, LocationForecastResponse $forecast)
+	{
 		$location->forecasts()->updateOrCreate([
-			'location_id' => $locationId,
+			'location_id' => $location->id,
 			'date' => $forecast->date->format('Y-m-d H:i:s'),
 		], [
-			'location_id' => $locationId,
+			'location_id' => $location->id,
 			'main_description' => $forecast->main_description,
 			'description' => $forecast->description,
 			'temperature' => $forecast->temperature,

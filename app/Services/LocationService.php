@@ -12,18 +12,30 @@ class LocationService
     public function __construct(private LocationRepository $locationRepository)
     {
         $this->weatherService = new WeatherService(app(OpenWeatherService::class));
-    }   
+    }
 
-    public function updateFiveDaysForecast(int $locationId)
+    function createLocation(string $country, string $city): Location
     {
-        $location = $this->locationRepository->findLocationById($locationId);
+        $location = $this->locationRepository->createLocation($country, $city);
 
-        $locationString = $location->name . ',' . $location->country;
+        $this->updateFiveDaysForecast($location);
+
+        return $location;
+    }
+
+    function findLocationByCountryName(string $country, string $name): ?Location
+    {
+        return $this->locationRepository->findLocationByCountryName($country, $name);
+    }
+
+    public function updateFiveDaysForecast(Location $location)
+    {
+        $locationString = $location->city . ',' . $location->country;
 
         $locationForecastResponse = $this->weatherService->getWeather($locationString);
 
         foreach ($locationForecastResponse as $forecast) {
-            $this->locationRepository->upsertLocationForecast($locationId, $forecast);
+            $this->locationRepository->upsertLocationForecast($location, $forecast);
         }
     }
 }
