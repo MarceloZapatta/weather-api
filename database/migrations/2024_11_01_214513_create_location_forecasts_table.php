@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('location_id')->constrained();
             $table->dateTime('date');
+            $table->string('icon');
             $table->string('main_description');
             $table->string('description');
             $table->float('temperature');

@@ -52,6 +52,7 @@ class OpenWeatherService implements WeatherServiceInterface
         foreach ($list as $item) {
             $locationForecasts[] = new LocationForecastResponse(
                 Carbon::parse($item->dt),
+                $item->weather[0]->icon,
                 $item->weather[0]->main,
                 $item->weather[0]->description,
                 $item->main->temp,

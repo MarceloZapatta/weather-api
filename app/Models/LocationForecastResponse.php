@@ -8,6 +8,7 @@ class LocationForecastResponse
 {
   public function __construct(
     public Carbon $date,
+    public string $icon,
     public string $main_description,
     public string $description,
     public float $temperature,

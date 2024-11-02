@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -15,7 +16,9 @@ class LocationForecastResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'date' => $this->date,
+            'date' => Carbon::parse($this->date)->toDayDateTimeString(),
+            'description' => ucfirst($this->description),
+            'icon' => "https://openweathermap.org/img/wn/{$this->icon}@2x.png",
             'temperature' => $this->temperature,
             'humidity' => $this->humidity,
             'rainfall' => $this->rainfall,

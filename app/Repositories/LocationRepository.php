@@ -33,7 +33,7 @@ class LocationRepository
 			'location_id' => $location->id,
 			'date' => $forecast->date->format('Y-m-d H:i:s'),
 		], [
-			'location_id' => $location->id,
+			'icon' => $forecast->icon,
 			'main_description' => $forecast->main_description,
 			'description' => $forecast->description,
 			'temperature' => $forecast->temperature,

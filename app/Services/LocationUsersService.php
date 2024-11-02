@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Exceptions\LocationUserAlreadyExistsException;
+use App\Models\Location;
 use App\Models\LocationUser;
 use App\Repositories\LocationUserRepository;
 use Illuminate\Http\Response;
@@ -30,7 +31,7 @@ class LocationUsersService
      *
      * @param int $locationId
      */
-    public function storeUserLocation(string $country, string $city): void
+    public function storeUserLocation(string $country, string $city): Location
     {
         $location = $this->locationService->findLocationByCountryName($country, $city);
 
@@ -45,6 +46,8 @@ class LocationUsersService
         // }
 
         $this->locationUserRepository->createForCurrentUser($location->id);
+
+        return $location->refresh();
     }
 
     /**
