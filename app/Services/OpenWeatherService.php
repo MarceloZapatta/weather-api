@@ -8,13 +8,13 @@ use App\Interfaces\OpenWeatherApiResponseInterface;
 use App\Interfaces\WeatherServiceInterface;
 use App\Models\LocationForecastResponse;
 use Carbon\Carbon;
-use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Http;
 
 class OpenWeatherService implements WeatherServiceInterface
 {
     protected $apiKey;
 
-    public function __construct(private Client $client)
+    public function __construct()
     {
         $this->apiKey = env('OPEN_WEATHER_API_KEY');
 
@@ -30,7 +30,7 @@ class OpenWeatherService implements WeatherServiceInterface
      */
     public function getWeatherForecast(string $location): array
     {
-        $response = $this->client->get("https://api.openweathermap.org/data/2.5/forecast?q={$location}&appid={$this->apiKey}&units=metric");
+        $response = Http::get("https://api.openweathermap.org/data/2.5/forecast?q={$location}&appid={$this->apiKey}&units=metric");
 
         if ($response->getStatusCode() !== 200) {
             throw new ErrorFetchingWeatherDataException;
