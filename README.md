@@ -15,6 +15,7 @@
 - Sanctum
 - Resources
 - Http Client
+- Gate, Policies
 
 ## Design 🏗️
 - Service Repository pattern

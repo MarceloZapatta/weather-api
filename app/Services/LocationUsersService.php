@@ -7,6 +7,7 @@ use App\Models\Location;
 use App\Models\LocationUser;
 use App\Repositories\LocationUserRepository;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
 
 /**
  * Class LocationUsersService
@@ -57,6 +58,8 @@ class LocationUsersService
      */
     public function deleteUserLocation(Location $location): void
     {
+        Gate::authorize('delete-user-location', $location);
+
         $locationUser = $this->locationUserRepository->findForCurrentUser($location->id);
 
         if (!$locationUser) {
