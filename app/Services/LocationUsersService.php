@@ -41,9 +41,9 @@ class LocationUsersService
 
         $locationUser = $this->locationUserRepository->findForCurrentUser($location->id);
 
-        // if ($locationUser) {
-        //     throw new LocationUserAlreadyExistsException();
-        // }
+        if ($locationUser) {
+            throw new LocationUserAlreadyExistsException();
+        }
 
         $this->locationUserRepository->createForCurrentUser($location->id);
 
@@ -53,11 +53,13 @@ class LocationUsersService
     /**
      * Delete user location
      *
-     * @param LocationUser $locationUser
+     * @param Location $locationUser
      */
-    public function deleteUserLocation(LocationUser $locationUser): void
+    public function deleteUserLocation(Location $location): void
     {
-        if ($locationUser->user_id !== auth()->id()) {
+        $locationUser = $this->locationUserRepository->findForCurrentUser($location->id);
+
+        if (!$locationUser) {
             throw new \Illuminate\Auth\Access\AuthorizationException('This action is unauthorized.');
         }
 

@@ -21,7 +21,7 @@ class LocationForecastResource extends JsonResource
             'icon' => "https://openweathermap.org/img/wn/{$this->icon}@2x.png",
             'temperature' => $this->temperature,
             'humidity' => $this->humidity,
-            'rainfall' => $this->rainfall,
+            'rain' => $this->rain,
             'wind_speed' => $this->wind_speed,
             'wind_direction' => $this->wind_direction,
             'pressure' => $this->pressure,

@@ -25,10 +25,10 @@ class LocationUserRepository
      * @param int $locationId
      * @return LocationUser|null
      */
-    public function findForCurrentUser(int $locationId): ?Location
+    public function findForCurrentUser(int $locationId): ?LocationUser
     {
         $user = auth()->user();
-        return $user->locations()->find($locationId);
+        return LocationUser::where('location_id', $locationId)->where('user_id', $user->id)->first();
     }
 
     /**

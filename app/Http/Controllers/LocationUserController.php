@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\LocationUserRequest;
 use App\Http\Resources\LocationResource;
-use App\Models\LocationUser;
+use App\Models\Location;
 use App\Services\LocationUsersService;
 use Illuminate\Http\Response;
 
@@ -44,7 +44,7 @@ class LocationUserController extends Controller
      * 
      * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy(LocationUser $location): \Illuminate\Http\JsonResponse
+    public function destroy(Location $location): \Illuminate\Http\JsonResponse
     {
         $this->locationUsersService->deleteUserLocation($location);
 
