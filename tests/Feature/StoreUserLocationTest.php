@@ -13,6 +13,37 @@ class SaveLocationTest extends TestCase
 {
     use RefreshDatabase;
 
+    public function test_it_should_not_found_city_weather_data(): void
+    {
+        $user = User::factory()->create();
+        Sanctum::actingAs($user, ['*']);
+
+        Http::shouldReceive('get')
+            ->once()
+            ->andReturnSelf();
+
+        Http::shouldReceive('getStatusCode')
+            ->andReturn(404);
+
+        Http::shouldReceive('getBody')
+            ->andReturn(json_encode([
+                'cod' => '404',
+                'message' => 'city not found',
+            ]));
+
+
+        $data = [
+            'city' => 'Teste',
+            'country' => 'ARA',
+        ];
+
+        $this->post('/api/user/locations', $data)
+            ->assertStatus(400)
+            ->assertJson([
+                'message' => 'Unable to fetch weather data for this location.',
+            ]);
+    }
+
     public function test_it_should_create_a_new_location_for_user_with_forecast(): void
     {
         $user = User::factory()->create();
@@ -284,36 +315,5 @@ class SaveLocationTest extends TestCase
         $response->assertJson([
             'message' => 'User location already exists',
         ]);
-    }
-
-    public function test_it_should_not_found_city_weather_data(): void
-    {
-        $user = User::factory()->create();
-        Sanctum::actingAs($user, ['*']);
-
-        Http::shouldReceive('get')
-            ->once()
-            ->andReturnSelf();
-
-        Http::shouldReceive('getStatusCode')
-            ->andReturn(404);
-
-        Http::shouldReceive('getBody')
-            ->andReturn(json_encode([
-                'cod' => '404',
-                'message' => 'city not found',
-            ]));
-
-
-        $data = [
-            'city' => 'Teste',
-            'country' => 'ARA',
-        ];
-
-        $this->post('/api/user/locations', $data)
-            ->assertStatus(400)
-            ->assertJson([
-                'message' => 'Unable to fetch weather data for this location.',
-            ]);
     }
 }
