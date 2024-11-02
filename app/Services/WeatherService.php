@@ -5,9 +5,16 @@ namespace App\Services;
 use App\Interfaces\WeatherServiceInterface;
 use App\Models\LocationForecastResponse;
 
+/**
+ * This is a factory class that creates a new instance of the OpenWeatherService class.
+ */
 class WeatherService
 {
-    public function __construct(private WeatherServiceInterface $weatherService) {}
+    private WeatherServiceInterface $weatherProvider;
+
+    public function __construct() {
+        $this->weatherProvider = new OpenWeatherService();
+    }
 
     /**
      * @param string $location
@@ -15,6 +22,6 @@ class WeatherService
      */
     public function getWeather(string $location): array
     {
-        return $this->weatherService->getWeatherForecast($location);
+        return $this->weatherProvider->getWeatherForecast($location);
     }
 }

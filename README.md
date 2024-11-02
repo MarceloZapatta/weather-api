@@ -16,6 +16,12 @@
 - Resources
 - Http Client
 - Gate, Policies
+- Jobs
+    - Used to insert into queue the Location update notification
+- Commands
+    - ./vendor/bin/saiil artisan location:update-forecasts # Will update all locations
+- Schedule
+    - Command scheduled to run every 3 hours to get updated forecasts
 
 ## Design 🏗️
 - Service Repository pattern

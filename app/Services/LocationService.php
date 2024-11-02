@@ -9,12 +9,7 @@ use App\Repositories\LocationRepository;
 
 class LocationService
 {
-    private WeatherService $weatherService;
-
-    public function __construct(private LocationRepository $locationRepository)
-    {
-        $this->weatherService = new WeatherService(app(OpenWeatherService::class));
-    }
+    public function __construct(private LocationRepository $locationRepository, private WeatherService $weatherService) {}
 
     function createLocation(string $country, string $city): Location
     {
