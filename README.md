@@ -3,18 +3,24 @@
 ## How to run
 - Is using laravel Sail
 - Copy .env.example .env
-- ./vendor/bin/sail migrate --seed
 - ./vendor/bin/sail up -d
+- ./vendor/bin/sail migrate --seed
 
-## Features:
+## Features ✨
 
 - Migrations
+- Factories
 - Seeders
 - FormRequests
-- Laravel Sanctum
+- Sanctum
 - Resources
+- Http Client
 
-## Users:
+## Design 🏗️
+- Service Repository pattern
+- Factory Pattern for thirdy party Weather provider
+
+## Users 👱
 
 Jorge Aragao
 ```
