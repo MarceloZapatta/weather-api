@@ -22,6 +22,8 @@
     - ./vendor/bin/saiil artisan location:update-forecasts # Will update all locations
 - Schedule
     - Command scheduled to run every 3 hours to get updated forecasts
+- Feature tests
+    - For saving user location, this is when is made a fetch for the Third Party OpenWeatherMap API
 
 ## Design 🏗️
 - Service Repository pattern
