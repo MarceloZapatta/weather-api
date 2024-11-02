@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\LocationUserAlreadyExistsException;
+use App\Exceptions\UnableToFetchWeatherNewLocationException;
 use App\Http\Requests\LocationUserRequest;
 use App\Http\Resources\LocationResource;
 use App\Models\Location;
+use App\Models\User;
 use App\Services\LocationUsersService;
 use Illuminate\Http\Response;
 
@@ -31,7 +34,17 @@ class LocationUserController extends Controller
      */
     public function store(LocationUserRequest $request): \Illuminate\Http\JsonResponse
     {
-        $location = $this->locationUsersService->storeUserLocation($request->country, $request->city);
+        try {
+            $location = $this->locationUsersService->storeUserLocation($request->country, $request->city);
+        } catch (UnableToFetchWeatherNewLocationException $th) {
+            return response()->json([
+                'message' => 'Unable to fetch weather data for this location.'
+            ], Response::HTTP_BAD_REQUEST);
+        } catch (LocationUserAlreadyExistsException $th) {
+            return response()->json([
+                'message' => 'User location already exists'
+            ], Response::HTTP_BAD_REQUEST);
+        }
 
         return response()->json([
             'message' => 'Location created successfully',

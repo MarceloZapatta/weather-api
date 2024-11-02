@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Exceptions\ErrorFetchingWeatherDataException;
+use App\Exceptions\UnableToFetchWeatherNewLocationException;
 use App\Models\Location;
 use App\Repositories\LocationRepository;
 
@@ -18,7 +20,12 @@ class LocationService
     {
         $location = $this->locationRepository->createLocation($country, $city);
 
-        $this->updateFiveDaysForecast($location);
+        try {
+            $this->updateFiveDaysForecast($location);
+        } catch (ErrorFetchingWeatherDataException $th) {
+            $location->delete();
+            throw new UnableToFetchWeatherNewLocationException;
+        }
 
         return $location;
     }
