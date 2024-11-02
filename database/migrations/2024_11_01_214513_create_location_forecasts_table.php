@@ -14,15 +14,15 @@ return new class extends Migration
         Schema::create('location_forecasts', function (Blueprint $table) {
             $table->id();
             $table->foreignId('location_id')->constrained();
-            $table->date('date');
-            $table->integer('temperature');
+            $table->dateTime('date');
+            $table->string('main_description');
+            $table->string('description');
+            $table->float('temperature');
+            $table->float('temperature_min');
+            $table->float('temperature_max');
             $table->integer('humidity');
-            $table->integer('rainfall');
-            $table->integer('wind_speed');
-            $table->integer('wind_direction');
-            $table->integer('pressure');
-            $table->integer('visibility');
-            $table->integer('cloud_cover');
+            $table->float('rain');
+            $table->float('wind_speed');
             $table->timestamps();
         });
     }

@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Models\Location;
 use App\Models\LocationUser;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -24,7 +25,7 @@ class LocationUserRepository
      * @param int $locationId
      * @return LocationUser|null
      */
-    public function findForCurrentUser(int $locationId): ?LocationUser
+    public function findForCurrentUser(int $locationId): ?Location
     {
         $user = auth()->user();
         return $user->locations()->find($locationId);
@@ -34,10 +35,10 @@ class LocationUserRepository
      * @param int $locationId
      * @return LocationUser
      */
-    public function createForCurrentUser(int $locationId): LocationUser
+    public function createForCurrentUser(int $locationId): void
     {
         $user = auth()->user();
-        return $user->locations()->attach($locationId);
+        $user->locations()->attach($locationId);
     }
 
     /**

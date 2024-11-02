@@ -13,7 +13,7 @@ use Illuminate\Http\Response;
  */
 class LocationUsersService
 {
-    public function __construct(private LocationUserRepository $locationUserRepository) {}
+    public function __construct(private LocationUserRepository $locationUserRepository, private LocationService $locationService) {}
 
     /**
      * Get user locations
@@ -32,13 +32,15 @@ class LocationUsersService
      */
     public function storeUserLocation(int $locationId): void
     {
-        $locationUser = $this->locationUserRepository->findForCurrentUser($locationId);
+        $location = $this->locationUserRepository->findForCurrentUser($locationId);
 
-        if ($locationUser) {
-            throw new LocationUserAlreadyExistsException();
-        }
+        // if ($location) {
+        //     throw new LocationUserAlreadyExistsException();
+        // }
 
         $this->locationUserRepository->createForCurrentUser($locationId);
+
+        $this->locationService->updateFiveDaysForecast($locationId);
     }
 
     /**

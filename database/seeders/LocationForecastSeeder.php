@@ -21,14 +21,14 @@ class LocationForecastSeeder extends Seeder
             for ($i=0; $i < 5; $i++) { 
                 $location->forecasts()->create([
                     'date' => $now->addDays($i),
-                    'temperature' => rand(-20, 40),
+                    'main_description' => 'Clear',
+                    'description' => 'clear sky',
+                    'temperature' => rand(0, 40),
+                    'temperature_min' => rand(0, 25),
+                    'temperature_max' => rand(25, 40),
                     'humidity' => rand(0, 100),
-                    'rainfall' => rand(0, 100),
-                    'wind_speed' => rand(0, 100),
-                    'wind_direction' => rand(0, 360),
-                    'pressure' => rand(900, 1100),
-                    'visibility' => rand(0, 100),
-                    'cloud_cover' => rand(0, 100)
+                    'rain' => rand(0, 100),
+                    'wind_speed' => rand(0, 30),
                 ]);
             }
         }
