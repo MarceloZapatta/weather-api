@@ -2,13 +2,24 @@
 
 ## How to run
 - Is using laravel Sail
-- Copy .env.example .env
-- This project is using OpenWeatherAPI, so insert your key at the .env key `OPEN_WEATHER_API_KEY=`
-- ./vendor/bin/sail up -d
-- ./vendor/bin/sail migrate --seed
+- Copy `.env.example` `.env`
+- Run `composer install`
+- This project is using OpenWeatherAPI, so insert your key at the `.env` key `OPEN_WEATHER_API_KEY=`
+- `./vendor/bin/sail up -d`
+- `./vendor/bin/sail artisan migrate --seed`
     - This will migrate and run the seeds with two `Test Users`
-## Features ✨
+- Run `./vendor/bin/sail artisan key:generate` to generate a new key
 
+## Throubleshooting
+
+- Maybe you can get permission issues with some folders using Laravel Sail
+- `sudo chmod -R 777 storage/logs`
+
+## API Documentation
+
+You can check the [API Document from Postman here](https://documenter.getpostman.com/view/13192503/2sAY4ye1X6)
+
+## Features ✨
 - Migrations
 - Factories
 - Seeders
@@ -18,7 +29,7 @@
 - Http Client
 - Gate, Policies
 - Jobs
-    - Used to insert into queue the Location update notification
+    - Used to insert into queue the Location update forecast
 - Commands
     - ./vendor/bin/saiil artisan location:update-forecasts # Will update all locations
 - Schedule
