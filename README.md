@@ -1,5 +1,15 @@
 # Weather API Project ⛅
 
+## Requirements
+- Composer 2
+- Docker for using Laravel Sail
+
+Or you could configure every service by your own
+
+- PHP 8.3
+- MySQL 8
+- Node 20
+
 ## How to run
 - Is using laravel Sail
 - Copy `.env.example` `.env`
