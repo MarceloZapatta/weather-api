@@ -25,6 +25,8 @@ return new class extends Migration
             $table->float('rain');
             $table->float('wind_speed');
             $table->timestamps();
+
+            $table->unique(['location_id', 'date']);
         });
     }
 
