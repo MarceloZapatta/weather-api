@@ -16,8 +16,8 @@ Or you could configure every service by your own
 - MySQL 8
 - Node 20
 
-## How to run
-- Is using laravel Sail
+## How to run - Laravel Sail
+- The project is using laravel Sail
 - Copy `.env.example` `.env`
 - Run `composer install`
 - This project is using OpenWeatherAPI, so insert your key at the `.env` key `OPEN_WEATHER_API_KEY=`
@@ -26,10 +26,22 @@ Or you could configure every service by your own
     - This will migrate and run the seeds with two `Test Users`
 - Run `./vendor/bin/sail artisan key:generate` to generate a new key
 
+## How to run - Standlone php
+- If don't want to use Laravel Sail you can configure the project by your own
+- Install the MySQL database
+- `composer install`
+- `php artisan migrate --seed`
+- `php artisan key:generate`
+- `php artisan serve`
+- Change you front end server to your `API_URL + '/api'`: `http://localhost:8000/api`
+
 ## Throubleshooting
 
 - Maybe you can get permission issues with some folders using Laravel Sail
 - `sudo chmod -R 777 storage/logs`
+- `sudo chmod -R 777 storage/framework/views`
+- `sudo chmod -R 777 storage/framework/cache`
+- `sudo chmod -R 777 storage/framework/testing`
 
 ## API Documentation
 
