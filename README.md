@@ -5,6 +5,8 @@ This is the backend Laravel project, if you are looking for the Frontend:
 [Weather Front Project](https://github.com/MarceloZapatta/weather-front)
 
 ## Requirements
+
+- PHP 8.3
 - Composer 2
 - Docker for using Laravel Sail
 
